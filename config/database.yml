@@ -1,0 +1,44 @@
+development:
+  adapter: mysql
+  host: dbhost
+  username: root
+  password:
+  database: new_app_development
+  pool: 5
+  timeout: 5000
+  
+test:
+  adapter: mysql
+  host: dbhost
+  username: root
+  password: 
+  database: new_app_test
+  pool: 5
+  timeout: 5000
+
+acceptance:
+  adapter: mysql
+  host: dbhost
+  username: root
+  password: 
+  database: new_app_acceptance
+  pool: 5
+  timeout: 5000
+    
+qa:
+  adapter: mysql
+  host: dbhost
+  username: root
+  password: 
+  database: new_app_qa
+  pool: 5
+  timeout: 5000
+
+production:
+  adapter: mysql
+  host: dbhost
+  username: root
+  password: 
+  database: new_app_production
+  pool: 5
+  timeout: 5000

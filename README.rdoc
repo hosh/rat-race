@@ -1,0 +1,58 @@
+= New App
+
+== Installation
+
+=== Requirements
+
+- ActiveRecord
+- Sinatra
+- Rack
+
+Install the gems with:
+
+  sudo gem install activerecord sinatra rack
+
+=== Getting the source
+
+  git clone git@github.com:primedia/new_app.git
+
+=== Creating The Database
+
+The Lead Service expects you to have a MySQL database. Its
+configuration lives in <tt>config/database.yml</tt> if you want to change the
+defaults. The default environment is development. To change startup environment see below rackup command.
+
+=== Creating And Migrating The Database
+  RACK_ENV='your_environment' rake db:create
+  RACK_ENV='your_environment' rake db:migrate
+
+Just like you're used too.
+
+=== Running in Development
+
+==== Rack
+
+  cd new_app
+  rackup 
+
+To change the environment. <tt>export RACK_ENV=qa></tt> first. Then run rackup.
+
+Server will be available at <tt>http://localhost:9292</tt> by default
+
+==== Passenger Pane
+
+See
+http://reinh.com/blog/2009/04/17/simplify-your-dev-environment-with-passenger-pane.html
+for installation instructions
+
+== Usage
+
+=== Resources
+
+=== Required fields
+* +example_required_field+
+
+=== Additional Fields
+* +example_optional_field+
+
+== Additional Resources

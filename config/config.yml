@@ -1,0 +1,20 @@
+default: &default
+  :syslog_name: 'new_app'
+  :syslog_disable: false
+  
+test:
+  <<: *default
+  :syslog_disable: true
+  
+development:
+  <<: *default
+  
+acceptance:
+  <<: *default
+    
+qa:
+  <<: *default
+      
+production:
+  <<: *default
+  :syslog_disable: true

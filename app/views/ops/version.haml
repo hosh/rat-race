@@ -1,0 +1,30 @@
+.container{:style => " width: 1000px;"}
+  .spacer
+  #version
+    .label= @app_name
+    .value= (@version !~ /Unknown/) ? simple_link (@version, "#{@app_git_path}/tree/#{@version}", 'font-size: 20px;') : @version
+  .spacer  
+  #date
+    .label Date Deployed:
+    .value= @deploy_date
+  .spacer
+  #commit
+    .label
+      Last Github Commit:
+    .value
+      = (@git_version !~ /Unknown/) ? simple_link (@git_version, "#{@app_git_path}/commit/#{@git_version}", 'font-size: 20px;') : @git_version
+  .spacer
+  #host
+    .label
+      Mongrel Host:
+    .value
+      = @hostname
+
+  
+%style
+  :plain
+    .container    {font-size: 20px;}
+    .label        {float: left; width: 400px;}
+    .spacer       {clear: both; padding: 10px;}
+    .value        {float: left; width: 500px; text-align: right;}
+    .clear        {clear: both;}
