@@ -34,7 +34,7 @@ module Rack
 
       @now = Time.now
 
-      # Common Log Format: http://httpd.apache.org/docs/1.3/logs.html#common
+      # Combined Log Format: http://httpd.apache.org/docs/1.3/logs.html
       # lilith.local - - [07/Aug/2006 23:58:02] "GET / HTTP/1.1" 500 -
       #             %{%s - %s [%s] "%s %s%s %s" %d %s\n} %
       @logger << %{%s - %s [%s] "%s %s%s %s" %d %s "%s" "%s" %0.4f\n} %
@@ -52,6 +52,12 @@ module Rack
          @env["HTTP_USER_AGENT"], 
          @now - @time
         ]
+      unless @env['rack.request.form_hash'].empty?
+      @logger << %{%s\n} %
+        [
+          @env['rack.request.form_hash'].inspect
+        ]
+      end
     end
   end
 end
