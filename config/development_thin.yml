@@ -1,0 +1,18 @@
+--- 
+pid: tmp/pids/thin.pid
+log: log/thin.log
+timeout: 30
+port: 
+max_conns: 1024
+chdir: /Users/hbeaver/code/primedia/service_leads/
+rackup: /Users/hbeaver/code/primedia/service_leads/config.ru
+max_persistent_conns: 512
+environment: development
+daemonize: true
+address: 0.0.0.0
+require: []
+
+servers: 1   
+
+#also you can run this like this:
+#thin start -c . -p 3000 -h 10.1.11.81 -e development  -D -r ./config.ru    

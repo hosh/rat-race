@@ -1,0 +1,14 @@
+--- 
+pid: tmp/pids/thin.pid
+log: log/thin.log
+timeout: 30
+port: 
+max_conns: 1024
+chdir: /var/www/leads.primedia.com/current
+max_persistent_conns: 512
+environment: staging
+daemonize: true
+address: 0.0.0.0
+require: []
+
+servers: 2
