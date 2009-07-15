@@ -1,7 +1,31 @@
-= New App
+= Sinatra Multiple Environment Application Template
+
+Copyright (c) 2009 Primedia Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 
 
-== Installation
+This multi-environment Sinatra template has a few features to get your app up and running quicker. It has syslog support with extended log format, ActiveRecord support, multi-stage deploy ready with thin restarts, multistage thin configuration files. It also adds these features:
+
+/ops/heartbeat url for load balancer checks.
+/ops/version that uses SHA1 from git checkout.  
+404, 500 and index url do not reply with Sinatra standards, so your production app can be quiet. 
 
 === Requirements
 
@@ -15,12 +39,12 @@ Install the gems with:
 
 === Getting the source
 
-  git clone git@github.com:primedia/new_app.git
+  git clone git@github.com:<repos>/new_app.git
 
-=== Creating The Database
+=== Creating ActiveRecord Database (optional)
 
-The Lead Service expects you to have a MySQL database. Its
-configuration lives in <tt>config/database.yml</tt> if you want to change the
+To enable your database uncomment activerecord related lines within 'configure do' in app/app.rb. 
+Configuration lives in <tt>config/database.yml</tt> if you want to change the
 defaults. The default environment is development. To change startup environment see below rackup command.
 
 === Creating And Migrating The Database
@@ -36,24 +60,18 @@ Just like you're used too.
   cd new_app
   rackup 
 
-To change the environment. <tt>export RACK_ENV=qa></tt> first. Then run rackup.
+To change the environment. Export the RACK_ENV variable for your environment.<tt>export RACK_ENV=qa></tt> first. Then run rackup.
 
 Server will be available at <tt>http://localhost:9292</tt> by default
 
-==== Passenger Pane
+=== Deploying to environments
 
-See
-http://reinh.com/blog/2009/04/17/simplify-your-dev-environment-with-passenger-pane.html
-for installation instructions
+Require software must be installed on each environment, as well as cap setup. Create a symlink to current deployed <env> thin configs from /etc/thin/#{application}.yml. Then deploy like a multistage Rails app:
 
-== Usage
+cap qa deploy:full     
 
-=== Resources
+The deploy file uses git to checkout from your repository and is based on tags for deploying so experiment in your QA/Test environment.
 
-=== Required fields
-* +example_required_field+
+=== Syslog
 
-=== Additional Fields
-* +example_optional_field+
-
-== Additional Resources
+To enable syslog, simply set "syslog_disable" to false and Thin/App messages will now appear be sent to syslog in extended log format!

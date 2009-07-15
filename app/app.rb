@@ -33,7 +33,7 @@ class NewApp < Sinatra::Default
   
   get '/ops/version' do
     @app_name = "New App"
-    @app_git_path = "https://github.com/primedia/new_app"
+    @app_git_path = "https://github.com/YOUR_ORGANIZATION/new_app"
     @repository = "new_app"
     begin
       @version = File.read('./VERSION').chomp.gsub('^{}', '')

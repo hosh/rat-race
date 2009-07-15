@@ -4,14 +4,14 @@ require 'capistrano/ext/multistage'
 default_run_options[:pty]   = true
 ssh_options[:forward_agent] = true
 
-set :application,   "leads.primedia.com"
+set :application,   "application_name"
 set :copy_cache,    "#{ENV['HOME']}/deploy/#{application}"
 set :copy_exclude,  ['.git']
 set :deploy_to,     "/var/www/#{application}"
 set :deploy_via,    :copy
 set :keep_releases, 5
 #set :mongrel_conf,  "#{deploy_to}/current/config/mongrel_cluster.yml"  
-set :repository,    "git@github.com:primedia/service_leads.git"
+set :repository,    "git@github.com:YOUR_ORGANIZATION/repos.git"
 set :scm,           "git"
 set :stages,        %w(qa staging production acceptance)
 set :user,          "deploy"
@@ -46,8 +46,8 @@ end
 task(:set_branch) { set :branch, stage == :acceptance ? "master" : tag_to_deploy }
 after 'multistage:ensure', :set_branch
 
-#before  "deploy:finalize_update", "symlink_images"
-after   "deploy:update",          "run_cfagent"
+#we use CFEngine to automate server configurations
+#after   "deploy:update",          "run_cfagent"
 
 desc "Run cfagent"
 	task :run_cfagent, :roles => :web do
@@ -101,16 +101,14 @@ namespace :deploy do
 
 end
 
-# Uncomment for Thin 
-
 #example restart: 
-# thin start -c /var/www/leads.primedia.com/current -C /var/www/leads.primedia.com/current/config/qa_thin.yml -e qa
+# thin start -c /var/www/application/current -C 
 namespace :thin do  
   %w(start stop restart).each do |action| 
     desc "#{action} the app's Thin Cluster"  
     task action.to_sym, :roles => :app do  
       # if you change to mongrel you must implement RACK_ENV=#{rails_env}. thin uses -e , mongrel uses the former.
-      cmd =  "thin #{action} -c #{deploy_to}/current -C /etc/thin/leads.yml -e #{rails_env}"
+      cmd =  "thin #{action} -c #{deploy_to}/current -C /etc/thin/#{application}.yml -e #{rails_env}"
       run cmd
     end
   end
