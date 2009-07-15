@@ -3,8 +3,10 @@
 
 This multi-environment Sinatra template has a few features to get your app up and running quicker. It has syslog support with extended log format, ActiveRecord support, multi-stage deploy ready with thin restarts, multistage thin configuration files. It also adds these features:
 
-/ops/heartbeat url for load balancer checks.
-/ops/version that uses SHA1 from git checkout.  
+/ops/heartbeat url for load balancer checks. 
+
+/ops/version that uses SHA1 from git checkout. 
+ 
 404, 500 and index url do not reply with Sinatra standards, so your production app can be quiet. 
 
 === Requirements
@@ -48,7 +50,7 @@ Server will be available at <tt>http://localhost:9292</tt> by default
 
 Require software must be installed on each environment, as well as cap setup. Create a symlink to current deployed <env> thin configs from /etc/thin/#{application}.yml. Then deploy like a multistage Rails app:
 
-cap qa deploy:full     
+  cap qa deploy:full     
 
 The deploy file uses git to checkout from your repository and is based on tags for deploying so experiment in your QA/Test environment.
 
